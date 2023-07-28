@@ -13,10 +13,3 @@ jobs:
         run: |
           npm ci
           npm run build
-      - uses: ./
-        id: package
-        with:
-          path: package.json
-          trim: true
-      - name: Version
-        run: echo "${{ fromJson(steps.package.outputs.content).version }}"
