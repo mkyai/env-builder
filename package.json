@@ -1,0 +1,25 @@
+{
+  "name": "build-env-action",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Create .env from secrets & variable stored in GitHub",
+  "repository": "mkyai/env-builder",
+  "scripts": {
+    "test": "standard --fix index.js",
+    "build": "ncc build index.js",
+    "version": "npm run build && git add dist",
+    "release": "np && git tag -f v1 && git push --tags -f"
+  },
+  "np": {
+    "publish": false
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.1",
+    "np": "^8.0.4",
+    "standard": "^17.1.0"
+  }
+}

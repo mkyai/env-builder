@@ -1,0 +1,20 @@
+name: Read file
+author: juliangruber
+description: 'Read file contents'
+branding:
+  icon: 'file'
+  color: purple
+inputs:
+  path:
+    description: 'File path'
+    required: true
+  trim:
+    description: 'Trims output'
+    required: false
+    default: false
+outputs:
+  content:
+    description: 'File content'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
