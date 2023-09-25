@@ -5,6 +5,9 @@ branding:
   icon: "file"
   color: purple
 inputs:
+  production:
+    description: "[true/false] to use production env"
+    required: false
   secrets:
     description: "Github Secrets"
     required: true
