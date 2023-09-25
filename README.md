@@ -20,6 +20,7 @@ jobs:
         with:
           secrets: ${{ toJson(secrets) }}
           variables: ${{ toJson(vars) }}
+          production: #[true|false]
           extra: #Optional extra variables
           path: #Path to extra env file
 ```

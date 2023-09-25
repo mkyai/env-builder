@@ -7,6 +7,9 @@ function convert (json, isProduction) {
   return Object.entries(json)
     .map(([key, value]) => {
       if (!isProduction) {
+        if (String(key).startsWith('_PROD_')) {
+          return []
+        }
         return `${key}=${value}`
       }
       if (String(key).startsWith('_PROD_')) {
