@@ -2832,7 +2832,9 @@ function convert (json, isProduction) {
       if (String(key).startsWith('_PROD_')) {
         return `${String(key).replace('_PROD_', '')}=${value}`
       }
+      return []
     })
+    .flat()
     .join('\n')
 }
 
