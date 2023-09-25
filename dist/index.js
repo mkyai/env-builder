@@ -2820,50 +2820,52 @@ var __webpack_exports__ = {};
 "use strict";
 
 
-const core = __nccwpck_require__(186)
-const { promises: fs } = __nccwpck_require__(147)
+const core = __nccwpck_require__(186);
+const { promises: fs } = __nccwpck_require__(147);
 
-function convert (json, isProduction) {
+function convert(json, isProduction) {
   return Object.entries(json)
     .map(([key, value]) => {
       if (!isProduction) {
-        if (String(key).startsWith('_PROD_')) {
-          return []
+        if (String(key).startsWith("_PROD_")) {
+          return [];
         }
-        return `${key}=${value}`
+        return `${key}=${value}`;
       }
-      if (String(key).startsWith('_PROD_')) {
-        return `${String(key).replace('_PROD_', '')}=${value}`
+      if (String(key).startsWith("_PROD_")) {
+        return `${String(key).replace("_PROD_", "")}=${value}`;
       }
-      return []
+      return [];
     })
     .flat()
-    .join('\n')
+    .join("\n");
 }
 
 const main = async () => {
-  const secrets = core.getInput('secrets')
+  const secrets = core.getInput("secrets");
   const production =
-    String(core.getInput('production')).toLowerCase() === 'true'
-  const variables = core.getInput('variables')
-  const extra = core.getInput('extra')
-  const path = core.getInput('path')
-  let vars = { ...JSON.parse(secrets), ...JSON.parse(variables) }
+    String(core.getInput("production")).toLowerCase() === "true";
+  const variables = core.getInput("variables");
+  const extra = core.getInput("extra");
+  const path = core.getInput("path");
+  console.log("Is_production", production);
+  console.log("Production_variable", core.getInput("production"));
+  let vars = { ...JSON.parse(secrets), ...JSON.parse(variables) };
   if (extra) {
     // TODO: add extra variables
-    vars = { ...vars, ...JSON.parse(extra) }
+    vars = { ...vars, ...JSON.parse(extra) };
   }
   if (path) {
     // TODO: add path variables
-    vars = { ...vars, ...JSON.parse(await fs.readFile(path, 'utf8')) }
+    vars = { ...vars, ...JSON.parse(await fs.readFile(path, "utf8")) };
   }
-  const output = convert(vars, production)
-  fs.writeFile('./.env', output)
+  const output = convert(vars, production);
+  fs.writeFile("./.env", output);
 
-  core.setOutput('content', vars)
-}
+  core.setOutput("content", vars);
+};
 
-main().catch((err) => core.setFailed(err.message))
+main().catch((err) => core.setFailed(err.message));
 
 })();
 
