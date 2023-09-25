@@ -1,7 +1,7 @@
 {
   "name": "build-env-action",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "Create .env from secrets & variable stored in GitHub",
   "repository": "mkyai/env-builder",
