@@ -12,8 +12,11 @@ inputs:
     description: "Github Variables"
     required: true
   branch:
-    description: "Branch Name"
+    description: "Branch Name [current branch name]"
     required: true
+  default_branch:
+    description: "Default Branch Name [develop]"
+    required: false
   extra:
     description: "Extra Variables"
     required: false

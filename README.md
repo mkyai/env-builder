@@ -20,7 +20,8 @@ jobs:
         with:
           secrets: ${{ toJson(secrets) }}
           variables: ${{ toJson(vars) }}
-          production: #[true|false]
+          branch: #Optional branch name (if different from current branch)
+          default_branch: #Optional default branch (if different from develop)
           extra: #Optional extra variables
           path: #Path to extra env file
 ```

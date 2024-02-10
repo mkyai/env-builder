@@ -2823,17 +2823,23 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(186)
 const { promises: fs } = __nccwpck_require__(147)
 
-function convert(json, isProduction) {
+function convert(json, branch, defaultBranch) {
+  let prefix = `_${branch.toUpperCase()}_`
+  const isDefault = branch === defaultBranch
+  if (isDefault) {
+    prefix = ''
+  }
+
   return Object.entries(json)
     .map(([key, value]) => {
-      if (!isProduction) {
-        if (String(key).startsWith('_PROD_')) {
+      if (!isDefault) {
+        if (String(key).startsWith('_')) {
           return []
         }
         return `${key}=${value}`
       }
-      if (String(key).startsWith('_PROD_')) {
-        return `${String(key).replace('_PROD_', '')}=${value}`
+      if (String(key).startsWith(prefix)) {
+        return `${String(key).replace(prefix, '')}=${value}`
       }
       return []
     })
@@ -2847,9 +2853,10 @@ const main = async () => {
 
   if (!branch) {
     branch = process.env.GITHUB_REF
-    console.log('Branch : ', branch)
     branch = branch.replace('refs/heads/', '')
   }
+
+  const defaultBranch = core.getInput('default_branch')
 
   const variables = core.getInput('variables')
   const extra = core.getInput('extra')
@@ -2864,7 +2871,7 @@ const main = async () => {
     // TODO: add path variables
     vars = { ...vars, ...JSON.parse(await fs.readFile(path, 'utf8')) }
   }
-  const output = convert(vars, branch === 'master')
+  const output = convert(vars, branch, defaultBranch || 'develop')
   fs.writeFile('./.env', output)
 
   core.setOutput('content', vars)
