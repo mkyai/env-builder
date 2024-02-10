@@ -3,7 +3,7 @@
 const core = require('@actions/core')
 const { promises: fs } = require('fs')
 
-function convert (json, isProduction) {
+function convert(json, isProduction) {
   return Object.entries(json)
     .map(([key, value]) => {
       if (!isProduction) {
@@ -23,13 +23,18 @@ function convert (json, isProduction) {
 
 const main = async () => {
   const secrets = core.getInput('secrets')
-  const production =
-    String(core.getInput('production')).toLowerCase() === 'true'
+  let branch = core.getInput('branch')
+
+  if (!branch) {
+    branch = process.env.GITHUB_REF
+    console.log('Branch : ', branch)
+    branch = branch.replace('refs/heads/', '')
+  }
+
   const variables = core.getInput('variables')
   const extra = core.getInput('extra')
   const path = core.getInput('path')
-  console.log('Is_production', production)
-  console.log('Production_variable', core.getInput('production'))
+
   let vars = { ...JSON.parse(secrets), ...JSON.parse(variables) }
   if (extra) {
     // TODO: add extra variables
@@ -39,7 +44,7 @@ const main = async () => {
     // TODO: add path variables
     vars = { ...vars, ...JSON.parse(await fs.readFile(path, 'utf8')) }
   }
-  const output = convert(vars, production)
+  const output = convert(vars, branch === 'master')
   fs.writeFile('./.env', output)
 
   core.setOutput('content', vars)

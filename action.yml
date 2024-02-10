@@ -5,14 +5,14 @@ branding:
   icon: "file"
   color: purple
 inputs:
-  production:
-    description: "[true/false] to use production env"
-    required: false
   secrets:
     description: "Github Secrets"
     required: true
   variables:
     description: "Github Variables"
+    required: true
+  branch:
+    description: "Branch Name"
     required: true
   extra:
     description: "Extra Variables"
