@@ -13,7 +13,7 @@ inputs:
     required: true
   branch:
     description: "Branch Name [current branch name]"
-    required: true
+    required: false
   default_branch:
     description: "Default Branch Name [develop]"
     required: false
