@@ -2832,7 +2832,7 @@ function convert(json, branch, defaultBranch) {
 
   return Object.entries(json)
     .map(([key, value]) => {
-      if (!isDefault) {
+      if (isDefault) {
         if (String(key).startsWith('_')) {
           return []
         }
