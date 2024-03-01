@@ -16,10 +16,10 @@ function convert(json, branch, defaultBranch) {
         if (String(key).startsWith('_')) {
           return []
         }
-        return `${key}=${value}`
+        return `${key}="${value}"`
       }
       if (String(key).startsWith(prefix)) {
-        return `${String(key).replace(prefix, '')}=${value}`
+        return `${String(key).replace(prefix, '')}="${value}"`
       }
       return []
     })
